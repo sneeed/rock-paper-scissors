@@ -1,5 +1,5 @@
-let cntPlayerWon = 0;
-let cntComputerWon = 0;
+let playerScore = 0;
+let computerScore = 0;
 game();
 console.log("%c" + printGameWinner(), "font-weight:bold;");
 
@@ -21,10 +21,10 @@ function playRound(playerSelection, computerSelection) {
     (playerSelection === "Paper" && computerSelection === "Rock") ||
     (playerSelection === "Scissors" && computerSelection === "Paper")
   ) {
-    ++cntPlayerWon;
+    ++playerScore;
     return `You Win! ${playerSelection} beats ${computerSelection}`;
   } else {
-    ++cntComputerWon;
+    ++computerScore;
     return `You Loose! ${playerSelection} looses against ${computerSelection}`;
   }
 }
@@ -40,12 +40,12 @@ function getComputerChoice() {
 
 function printGameWinner() {
   let string = "Game Over. ";
-  if (cntPlayerWon === cntComputerWon) {
-    string += `It's a Tie. You and the computer both won ${cntPlayerWon} times.`;
+  if (playerScore === computerScore) {
+    string += `It's a Tie. You and the computer both won ${playerScore} times.`;
   } else {
     string += `You ${
-      cntPlayerWon > cntComputerWon ? "Won" : "Lost"
-    }. You won ${cntPlayerWon} times, the computer won ${cntComputerWon} times.`;
+      playerScore > computerScore ? "Won" : "Lost"
+    }. You won ${playerScore} times, the computer won ${computerScore} times.`;
   }
   return string;
 }
