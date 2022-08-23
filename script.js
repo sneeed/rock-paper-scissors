@@ -1,7 +1,12 @@
 let playerScore = 0;
 let computerScore = 0;
+
+const results = document.querySelector(".results");
+
 // game();
-console.log("%c" + printGameWinner(), "font-weight:bold;");
+// const p = document.createElement("p");
+// p.textContent = printGameWinner();
+// results.appendChild(p);
 
 // function game() {
 //   for (let i = 0; i < 5; i++) {
@@ -58,6 +63,7 @@ buttons.forEach(function (button) {
 });
 
 function myFunction() {
-  const message = playRound(this.id, getComputerChoice());
-  console.log(message);
+  const p = document.createElement("p");
+  p.textContent = playRound(this.id, getComputerChoice());
+  results.appendChild(p);
 }
