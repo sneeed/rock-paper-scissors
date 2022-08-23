@@ -3,6 +3,8 @@ let computerScore = 0;
 
 const results = document.querySelector(".results");
 
+updatePlayerScore();
+
 // game();
 // const p = document.createElement("p");
 // p.textContent = printGameWinner();
@@ -18,20 +20,23 @@ const results = document.querySelector(".results");
 // }
 
 function playRound(playerSelection, computerSelection) {
+  let msg;
   playerSelection = capitalizeFirstLetter(playerSelection);
   if (playerSelection === computerSelection) {
-    return `It's a tie! ${playerSelection} is the same as ${computerSelection}`;
+    msg = `It's a tie! ${playerSelection} is the same as ${computerSelection}`;
   } else if (
     (playerSelection === "Rock" && computerSelection === "Scissors") ||
     (playerSelection === "Paper" && computerSelection === "Rock") ||
     (playerSelection === "Scissors" && computerSelection === "Paper")
   ) {
     ++playerScore;
-    return `You Win! ${playerSelection} beats ${computerSelection}`;
+    msg = `You Win! ${playerSelection} beats ${computerSelection}`;
   } else {
     ++computerScore;
-    return `You Loose! ${playerSelection} looses against ${computerSelection}`;
+    msg = `You Loose! ${playerSelection} looses against ${computerSelection}`;
   }
+  updatePlayerScore();
+  return msg;
 }
 
 function capitalizeFirstLetter(string) {
@@ -44,15 +49,17 @@ function getComputerChoice() {
 }
 
 function printGameWinner() {
-  let string = "Game Over. ";
+  let msg = "Game Over. ";
   if (playerScore === computerScore) {
-    string += `It's a Tie. You and the computer both won ${playerScore} times.`;
+    msg += `It's a Tie. You and the computer both won ${playerScore} times.`;
   } else {
-    string += `You ${
+    msg += `You ${
       playerScore > computerScore ? "Won" : "Lost"
     }. You won ${playerScore} times, the computer won ${computerScore} times.`;
   }
-  return string;
+  const p = document.createElement("p");
+  p.textContent = msg;
+  results.appendChild(p);
 }
 
 const buttons = document.querySelectorAll("button");
@@ -67,3 +74,18 @@ function myFunction() {
   p.textContent = playRound(this.id, getComputerChoice());
   results.appendChild(p);
 }
+
+function updatePlayerScore() {
+  if (playerScore >= 5 || computerScore >= 5) {
+    printGameWinner();
+    // TODO disable all buttons
+  }
+
+  const playerScoreElement = document.querySelector("#playerScore");
+  const computerScoreElement = document.querySelector("#computerScore");
+
+  playerScoreElement.textContent = `Player Score: ${playerScore}`;
+  computerScoreElement.textContent = `Computer Score: ${computerScore}`;
+}
+
+// TODO optimize random computer choice
