@@ -1,16 +1,16 @@
 let playerScore = 0;
 let computerScore = 0;
-game();
+// game();
 console.log("%c" + printGameWinner(), "font-weight:bold;");
 
-function game() {
-  for (let i = 0; i < 5; i++) {
-    const playerSelection = prompt("Choose Rock, Paper or Scissors: ");
-    // const playerSelection = "rock";
-    const computerSelection = getComputerChoice();
-    console.log(playRound(playerSelection, computerSelection));
-  }
-}
+// function game() {
+//   for (let i = 0; i < 5; i++) {
+//     const playerSelection = prompt("Choose Rock, Paper or Scissors: ");
+//     // const playerSelection = "rock";
+//     const computerSelection = getComputerChoice();
+//     console.log(playRound(playerSelection, computerSelection));
+//   }
+// }
 
 function playRound(playerSelection, computerSelection) {
   playerSelection = capitalizeFirstLetter(playerSelection);
@@ -48,4 +48,16 @@ function printGameWinner() {
     }. You won ${playerScore} times, the computer won ${computerScore} times.`;
   }
   return string;
+}
+
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach(function (button) {
+  button.addEventListener("click", myFunction);
+  // button.addEventListener('click', playRound(this.id, computerSelection));
+});
+
+function myFunction() {
+  const message = playRound(this.id, getComputerChoice());
+  console.log(message);
 }
