@@ -2,22 +2,15 @@ let playerScore = 0;
 let computerScore = 0;
 
 const results = document.querySelector(".results");
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    playRound(this.id, getComputerChoice());
+  });
+});
 
 updatePlayerScore();
-
-// game();
-// const p = document.createElement("p");
-// p.textContent = printGameWinner();
-// results.appendChild(p);
-
-// function game() {
-//   for (let i = 0; i < 5; i++) {
-//     const playerSelection = prompt("Choose Rock, Paper or Scissors: ");
-//     // const playerSelection = "rock";
-//     const computerSelection = getComputerChoice();
-//     console.log(playRound(playerSelection, computerSelection));
-//   }
-// }
 
 function playRound(playerSelection, computerSelection) {
   let msg;
@@ -35,8 +28,12 @@ function playRound(playerSelection, computerSelection) {
     ++computerScore;
     msg = `You Loose! ${playerSelection} looses against ${computerSelection}`;
   }
+
+  const p = document.createElement("p");
+  p.textContent = msg;
+  results.appendChild(p);
+
   updatePlayerScore();
-  return msg;
 }
 
 function capitalizeFirstLetter(string) {
@@ -46,6 +43,11 @@ function capitalizeFirstLetter(string) {
 function getComputerChoice() {
   const choices = ["Rock", "Paper", "Scissors"];
   return choices[Math.floor(Math.random() * choices.length)];
+}
+
+function endGame() {
+  printGameWinner();
+  disableAllButtons();
 }
 
 function printGameWinner() {
@@ -59,33 +61,25 @@ function printGameWinner() {
   }
   const p = document.createElement("p");
   p.textContent = msg;
+  p.style.fontWeight = "bold";
   results.appendChild(p);
 }
 
-const buttons = document.querySelectorAll("button");
-
-buttons.forEach(function (button) {
-  button.addEventListener("click", myFunction);
-  // button.addEventListener('click', playRound(this.id, computerSelection));
-});
-
-function myFunction() {
-  const p = document.createElement("p");
-  p.textContent = playRound(this.id, getComputerChoice());
-  results.appendChild(p);
+function disableAllButtons() {
+  const buttons = document.querySelectorAll("button");
+  buttons.forEach((button) => button.setAttribute("disabled", "true"));
 }
 
 function updatePlayerScore() {
-  if (playerScore >= 5 || computerScore >= 5) {
-    printGameWinner();
-    // TODO disable all buttons
-  }
-
   const playerScoreElement = document.querySelector("#playerScore");
   const computerScoreElement = document.querySelector("#computerScore");
 
   playerScoreElement.textContent = `Player Score: ${playerScore}`;
   computerScoreElement.textContent = `Computer Score: ${computerScore}`;
+
+  if (playerScore >= 5 || computerScore >= 5) {
+    endGame();
+  }
 }
 
 // TODO optimize random computer choice
